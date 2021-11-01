@@ -19,7 +19,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Select from "@material-ui/core/Select";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 
-import { UsersInterface } from "../models/IUser";
+import { InformersInterface } from "../models/IInformer";
 import { PatientsInterface } from "../models/IPatient";
 import { LevelsInterface } from "../models/ILevel";
 import { CharacteristicsInterface } from "../models/ICharacteristic";
@@ -31,7 +31,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { checkServerIdentity } from "tls";
-import Users from "./Informers";
+//import Users from "./Informers";
 
 const Alert = (props: AlertProps) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function CaseCreate() {
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [users, setUser] = useState<UsersInterface>();
+  const [informers, setInformer] = useState<InformersInterface>();
   const [patients, setPatients] = useState<PatientsInterface[]>([]);
   const [level, setLevels] = useState<LevelsInterface[]>([]);
   const [characteristic, setCharacteristics] = useState<CharacteristicsInterface[]>([]);
@@ -106,14 +106,14 @@ function CaseCreate() {
     setSelectedDate(date);
   };
 
-  const getUser = async () => {
+  const getInformer = async () => {
     let uid = localStorage.getItem("uid");
-    fetch(`${apiUrl}/user/${uid}`, requestOptions)
+    fetch(`${apiUrl}/informer/${uid}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         cases.InformerID = res.data.ID
         if (res.data) {
-          setUser(res.data);
+          setInformer(res.data);
         } else {
           console.log("else");
         }
@@ -160,7 +160,7 @@ function CaseCreate() {
   };
 
   useEffect(() => {
-    getUser();
+    getInformer();
     getPatients();
     getCharacteristics();
     getLevels();
@@ -173,7 +173,7 @@ function CaseCreate() {
 
   function submit() {
     let data = {
-        InformerID: convertType(users?.ID),
+        InformerID: convertType(informers?.ID),
         //PatientID: convertType(patients?.ID),
         PatientID: convertType(cases.PatientID),
         LevelID: convertType(cases.LevelID),
@@ -348,8 +348,8 @@ function CaseCreate() {
                     name: "InformerID",
                 }}
             >
-              <option value={users?.ID} key={users?.ID}>
-                  {users?.Name}
+              <option value={informers?.ID} key={informers?.ID}>
+                  {informers?.Name}
                 </option>  
               </Select>
             </FormControl>

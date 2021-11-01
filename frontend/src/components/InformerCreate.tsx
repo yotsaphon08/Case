@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
-import { UsersInterface } from "../models/IUser";
+import { InformersInterface } from "../models/IInformer";
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -33,10 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function UserCreate() {
+function InformerCreate() {
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [user, setUser] = useState<Partial<UsersInterface>>({});
+  const [informers, setInformer] = useState<Partial<InformersInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
@@ -51,20 +51,20 @@ function UserCreate() {
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
   ) => {
-    const id = event.target.id as keyof typeof user;
+    const id = event.target.id as keyof typeof informers;
     const { value } = event.target;
-    setUser({ ...user, [id]: value });
+    setInformer({ ...informers, [id]: value });
   };
 
   function submit() {
     let data = {
-      Name: user.Name ?? "",
-      Email: user.Email ?? "",
-      Tel: user.Tel ?? "",
-      Password: user.Password ?? "",
+      Name: informers.Name ?? "",
+      Email: informers.Email ?? "",
+      Tel: informers.Tel ?? "",
+      Password: informers.Password ?? "",
     };
 
-    const apiUrl = "http://localhost:8080/users";
+    const apiUrl = "http://localhost:8080/informers";
     const requestOptions = {
       method: "POST",
       headers: {
@@ -121,7 +121,7 @@ function UserCreate() {
                 type="string"
                 size="medium"
                 placeholder="กรุณากรอกข้อมูลชื่อ"
-                value={user.Name || ""}
+                value={informers.Name || ""}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -135,7 +135,7 @@ function UserCreate() {
                 type="string"
                 size="medium"
                 placeholder="กรุณากรอกข้อมูลอีเมล"
-                value={user.Email || ""}
+                value={informers.Email || ""}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -150,7 +150,7 @@ function UserCreate() {
                 type="password"
                 size="medium"
                 placeholder="กรุณากรอกรหัสผ่าน"
-                value={user.Password || ""}
+                value={informers.Password || ""}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -165,7 +165,7 @@ function UserCreate() {
                 type="string"
                 size="medium"
                 placeholder="กรุณากรอกข้อมูลเบอร์โทรศัพท์"
-                value={user.Tel || ""}
+                value={informers.Tel || ""}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -190,4 +190,4 @@ function UserCreate() {
   );
 }
 
-export default UserCreate;
+export default InformerCreate;

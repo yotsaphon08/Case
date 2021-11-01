@@ -1,7 +1,7 @@
 import { PatientsInterface } from "./IPatient";
 import { LevelsInterface } from "./ILevel";
 import { CharacteristicsInterface } from "./ICharacteristic";
-import { UsersInterface } from "./IUser";
+import { InformersInterface } from "./IInformer";
 
 export interface CasesInterface {
   ID: number,
@@ -18,5 +18,5 @@ export interface CasesInterface {
   Level: LevelsInterface,
 
   InformerID : number ,
-  Informer: UsersInterface,
+  Informer: InformersInterface,
 }

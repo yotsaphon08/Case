@@ -12,7 +12,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { UsersInterface } from "../models/IUser";
+import { InformersInterface } from "../models/IInformer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Users() {
+function Informers() {
   const classes = useStyles();
-  const [users, setUsers] = useState<UsersInterface[]>([]);
+  const [informers, setInformer] = useState<InformersInterface[]>([]);
 
-  const getUsers = async () => {
-    const apiUrl = "http://localhost:8080/users";
+  const getInformer = async () => {
+    const apiUrl = "http://localhost:8080/informers";
     const requestOptions = {
       method: "GET",
       headers: {
@@ -46,7 +46,7 @@ function Users() {
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
-          setUsers(res.data);
+          setInformer(res.data);
         } else {
           console.log("else");
         }
@@ -54,7 +54,7 @@ function Users() {
   };
 
   useEffect(() => {
-    getUsers();
+    getInformer();
   }, []);
 
   return (
@@ -74,7 +74,7 @@ function Users() {
           <Box>
             <Button
               component={RouterLink}
-              to="/user/create"
+              to="/informer/create"
               variant="contained"
               color="primary"
             >
@@ -102,12 +102,12 @@ function Users() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user: UsersInterface) => (
-                <TableRow key={user.ID}>
-                  <TableCell align="center">{user.ID}</TableCell>
-                  <TableCell align="center">{user.Name}</TableCell>
-                  <TableCell align="center">{user.Email}</TableCell>
-                  <TableCell align="center">{user.Tel}</TableCell>
+              {informers.map((informer: InformersInterface) => (
+                <TableRow key={informer.ID}>
+                  <TableCell align="center">{informer.ID}</TableCell>
+                  <TableCell align="center">{informer.Name}</TableCell>
+                  <TableCell align="center">{informer.Email}</TableCell>
+                  <TableCell align="center">{informer.Tel}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -118,4 +118,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Informers;
